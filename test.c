@@ -72,9 +72,11 @@ int
 main(void)
 {
     arr_s_t arr_s;
-    arr_l_t arr_l;
+    arr_s_t arr_s2;
 
     arr_s_zero(arr_s);
+    assert_s(arr_s, 0x00);
+    arr_s_zero(arr_s2);
     assert_s(arr_s, 0x00);
     arr_s_set_bit(arr_s, 0);    
     assert_s(arr_s, 0x01);
@@ -82,6 +84,13 @@ main(void)
     assert_s(arr_s, 0x07); 
     arr_s_tgl_bit(arr_s, 1);
     assert_s(arr_s, 0x05);
+    arr_s_set_bits(arr_s2, 2);
+    arr_s_and(arr_s, arr_s2);
+    assert_s(arr_s, 0x01);
+
+
+    arr_l_t arr_l;
+    arr_l_t arr_l2;
 
     arr_l_zero(arr_l);
     assert_l(arr_l, 0x0000000000000000, 0x0000000000000000);
@@ -96,8 +105,12 @@ main(void)
     arr_l_rst_bit(arr_l, 3);
     assert_l(arr_l, 0x0000000000000004, 0x3FFFFFFFFFFFFFF0); 
     assert(arr_l_ctz(arr_l) == 4); 
+    arr_l_zero(arr_l2);
+    arr_l_set_bit(arr_l2, 66);
+    arr_l_and(arr_l, arr_l2);
+    assert_l(arr_l, 0x0000000000000004, 0x0000000000000000);
 
-
+    printf("All tests passed\n");
 
     return 0;
 }
